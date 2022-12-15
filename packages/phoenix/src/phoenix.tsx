@@ -4,8 +4,13 @@ import Image from "@tiptap/extension-image";
 import {
   SlashCommands,
   items as slashCommandItems,
-  render as slashCommandItemsRender,
+  render as renderSlashCommandItems,
 } from "./extensions/slash-commands";
+import {
+  Variable,
+  items as variableItems,
+  render as renderVariableItems,
+} from "./extensions/variable";
 
 export const Phoenix = () => {
   const editor = useEditor({
@@ -15,7 +20,19 @@ export const Phoenix = () => {
       SlashCommands.configure({
         suggestion: {
           items: slashCommandItems,
-          render: slashCommandItemsRender,
+          render: renderSlashCommandItems,
+        },
+      }),
+      Variable.configure({
+        suggestion: {
+          items: variableItems,
+          render: renderVariableItems,
+        },
+        HTMLAttributes: {
+          class: "variable",
+        },
+        renderLabel({ node }) {
+          return `${node.attrs.label ?? node.attrs.id}`;
         },
       }),
     ],
